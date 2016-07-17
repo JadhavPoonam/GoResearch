@@ -1,4 +1,4 @@
-package edu.ucop.its.radsafety.config;
+package com.research.go.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -19,15 +19,15 @@ import javax.servlet.annotation.WebListener;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"edu.ucop.its.radsafety", "edu.ucop.its.authentication", "edu.ucop.erms.its.security.hmac"}, excludeFilters = @ComponentScan.Filter(value = Configuration.class, type = FilterType.ANNOTATION))
+@ComponentScan(basePackages = {"com.research.go"}, excludeFilters = @ComponentScan.Filter(value = Configuration.class, type = FilterType.ANNOTATION))
 @WebListener
 @PropertySources(
         value = {  @PropertySource(
-                    value = "classpath:/radsafety.${spring.profiles.active}.properties",
+                    value = "classpath:/goresearch.${spring.profiles.active}.properties",
                     ignoreResourceNotFound = true
         ),
                 @PropertySource(
-                        value = "classpath:/radsafety.omni.properties",
+                        value = "classpath:/goresearch.omni.properties",
                         ignoreResourceNotFound = true
                 )
         }

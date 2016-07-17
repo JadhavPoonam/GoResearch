@@ -1,8 +1,6 @@
-package edu.ucop.its.radsafety.config;
+package com.research.go.config;
 
-import edu.ucop.its.radsafety.data.base.CustomJpaRepositoryFactoryBean;
-import edu.ucop.its.radsafety.domain.Person;
-import edu.ucop.its.radsafety.helper.SpringSecurityAuditorAware;
+import com.research.go.data.base.CustomJpaRepositoryFactoryBean;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.EnvironmentAware;
@@ -27,15 +25,15 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"edu.ucop.its.radsafety.data"}, repositoryFactoryBeanClass = CustomJpaRepositoryFactoryBean.class)
+@EnableJpaRepositories(basePackages = {"com.research.go.data"}, repositoryFactoryBeanClass = CustomJpaRepositoryFactoryBean.class)
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @PropertySources(
         value = {@PropertySource(
-                value = "classpath:/radsafety.${spring.profiles.active}.properties",
+                value = "classpath:/goresearch.${spring.profiles.active}.properties",
                 ignoreResourceNotFound = true
         ),
                 @PropertySource(
-                        value = "classpath:/radsafety.omni.properties",
+                        value = "classpath:/goresearch.omni.properties",
                         ignoreResourceNotFound = true
                 )
         }
@@ -45,8 +43,13 @@ public class DataConfig implements EnvironmentAware {
     private Environment environment;
 
     @Bean
-    public AuditorAware<Person> auditorAware() {
-        return new SpringSecurityAuditorAware();
+    public AuditorAware auditorAware() {
+        return new AuditorAware() {
+            @Override
+            public Object getCurrentAuditor() {
+                return null;
+            }
+        };
     }
 
     @Override
@@ -62,7 +65,7 @@ public class DataConfig implements EnvironmentAware {
         flyway.setDataSource(dataSource());
         // Clean schema and reload only in dev or local
         if (environment.getProperty("spring.profiles.active").compareToIgnoreCase("local") == 0) {
-            flyway.clean();
+            //flyway.clean();
         }
         flyway.setSchemas(environment.getProperty("hibernate.default_schema").toUpperCase());
         return flyway;

@@ -1,4 +1,4 @@
-package edu.ucop.its.radsafety.config;
+package com.research.go.config;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
